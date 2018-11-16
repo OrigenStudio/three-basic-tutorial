@@ -43,6 +43,19 @@
       //  4. add cube to the scene so it is rendered
       scene.add( cube );
 
+      // light the scene:
+      var lights = [];
+      // top lightning (simulates daylight)
+      lights[0] = new THREE.DirectionalLight( 0xffffff, 0.5 );
+      // side lights (simulate lighbulbs)
+      lights[1] = new THREE.PointLight( 0xffffff, 1, 10 );
+      lights[1].position.x = 5;
+      lights[2] = new THREE.PointLight( 0xffffff, 1, 10 );
+      lights[2].position.x = -5;
+      lights[3] = new THREE.PointLight( 0xffffff, 1, 10 );
+      lights[3].position.z = 5;
+      lights.forEach(light => scene.add(light));
+      
       // start animation!
       animate();
       
