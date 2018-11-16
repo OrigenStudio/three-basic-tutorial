@@ -91,6 +91,11 @@
         cube.rotation.y += 0.01;
         cube.rotation.z += 0.01;
         
+        // scale cube based on input values
+        cube.scale.x = Number.parseFloat(document.getElementById('cube-x').value);
+        cube.scale.y = Number.parseFloat(document.getElementById('cube-y').value);
+        cube.scale.z = Number.parseFloat(document.getElementById('cube-z').value);
+        
         // actually perform the rendering of the scene
         render();
       }
