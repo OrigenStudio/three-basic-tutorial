@@ -42,6 +42,9 @@
       var cube = new THREE.Mesh( geometry, material );
       //  4. add cube to the scene so it is rendered
       scene.add( cube );
+
+      // start animation!
+      animate();
       
       // perform the rendering of the scene using the camera
       function render() {
