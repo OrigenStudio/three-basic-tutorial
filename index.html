@@ -32,6 +32,16 @@
       var camera = new THREE.PerspectiveCamera( 75, width / height, 0.1, 1000 );
       // move the camera away as by default it is placed at 0,0,0
       camera.position.z = 5;
+
+      // cube creation:
+      //  1. define its geometry
+      var geometry = new THREE.BoxGeometry( 1, 1, 1 );
+      //  2. create a material to define its appearance
+      var material = new THREE.MeshPhongMaterial( { color: 0x54a6ff } );
+      //  3. create a polygon mesh object
+      var cube = new THREE.Mesh( geometry, material );
+      //  4. add cube to the scene so it is rendered
+      scene.add( cube );
     </script>
   </body>
 </html>
