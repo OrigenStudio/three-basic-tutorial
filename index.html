@@ -79,6 +79,9 @@
       lights[4].position.y = -3;
       lights[4].position.z = -3;
       lights.forEach(light => scene.add(light));
+
+      // trigger resize function when window is being resized
+      window.addEventListener( 'resize', onWindowResize, false );
       
       // start animation!
       animate();
@@ -104,6 +107,16 @@
         cube.scale.z = Number.parseFloat(document.getElementById('cube-z').value);
         
         // actually perform the rendering of the scene
+        render();
+      }
+      // handle window resize
+      function onWindowResize() {
+        var newWidth = window.innerWidth;
+        var newHeight = window.innerHeight;
+        camera.aspect = newWidth / newHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize( newWidth, newHeight );
+        controls.handleResize();
         render();
       }
     </script>
