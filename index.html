@@ -31,6 +31,8 @@
     </div>
     <!--load threejs library-->
     <script src="js/three.js"></script>
+    <!--load trackball controls-->
+    <script src="js/controls/TrackballControls.js"></script>
     <script>
       const width = window.innerWidth;
       const height = window.innerHeight;
@@ -49,6 +51,9 @@
       // move the camera away as by default it is placed at 0,0,0
       camera.position.z = 5;
 
+      // add controls to move the camera
+      var controls = new THREE.TrackballControls(camera, renderer.domElement);
+     
       // cube creation:
       //  1. define its geometry
       var geometry = new THREE.BoxGeometry( 1, 1, 1 );
@@ -87,9 +92,8 @@
         // call everytime the browser is repainting
         requestAnimationFrame( animate );
 
-        // rotate cube as an animation example
-        cube.rotation.y += 0.01;
-        cube.rotation.z += 0.01;
+        // update controls
+        controls.update();
         
         // scale cube based on input values
         cube.scale.x = Number.parseFloat(document.getElementById('cube-x').value);
