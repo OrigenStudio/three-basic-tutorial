@@ -18,6 +18,12 @@
         position: absolute;
         padding: 15px;
       }
+      button[disabled] {
+        color: #888888;
+      }
+      button[disabled]:hover {
+        border-color: #bbbbbb;
+      }
     </style>
   </head>
   <body>
@@ -28,8 +34,8 @@
       <input id="cube-y" type="number" value="1" />
       <label for="cube-z">Z size</label>
       <input id="cube-z" type="number" value="1" />
-      <div><button id="reset-camera" onclick="resetCamera()">Reset camera</button></div>
-      <div><button id="center-camera" onclick="centerCamera()">Center camera</button></div>
+      <div><button id="reset-camera" onclick="resetCamera()" disabled>Reset camera</button></div>
+      <div><button id="center-camera" onclick="centerCamera()" disabled>Center camera</button></div>
     </div>
     <!--load threejs library-->
     <script src="js/three.js"></script>
@@ -85,6 +91,14 @@
       // trigger resize function when window is being resized
       window.addEventListener( 'resize', onWindowResize, false );
       
+      controls.addEventListener( 'change', function () {
+        // always enable reset camera button
+        document.getElementById('reset-camera').disabled = false;
+        
+        // enable center camera only when target has changed (camera has been panned)
+        document.getElementById('center-camera').disabled = !haveControlsTargetChanged();
+      });
+      
       // start animation!
       animate();
       
@@ -114,10 +128,12 @@
       // resets camera position
       function resetCamera() {
         controls.reset();
+        document.getElementById('reset-camera').disabled = true;
       }
       // centers camera position
       function centerCamera() {
         controls.target.set( 0, 0, 0 );
+        document.getElementById('center-camera').disabled = true;
       }
       // handle window resize
       function onWindowResize() {
@@ -128,6 +144,18 @@
         renderer.setSize( newWidth, newHeight );
         controls.handleResize();
         render();
+      }
+      // helper function to check whether if controls target las changed or not
+      function haveControlsTargetChanged() {
+        return (
+          !areEqual(controls.target.x, controls.target0.x) ||
+          !areEqual(controls.target.y, controls.target0.y) ||
+          !areEqual(controls.target.z, controls.target0.z)
+        );
+      }
+      // handle floating points error when checking for equality
+      function areEqual(a, b, precision) {
+        return Math.abs(a - b) < (precision || 0.001);
       }
     </script>
   </body>
