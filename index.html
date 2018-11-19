@@ -36,6 +36,7 @@
       <input id="cube-z" type="number" value="1" />
       <div><button id="reset-camera" onclick="resetCamera()" disabled>Reset camera</button></div>
       <div><button id="center-camera" onclick="centerCamera()" disabled>Center camera</button></div>
+      <div><button id="export-stl" onclick="exportSTL()" class="button-primary">Export STL</button></div>
     </div>
     <!--load threejs library-->
     <script src="js/three.js"></script>
@@ -160,6 +161,13 @@
       // handle floating points error when checking for equality
       function areEqual(a, b, precision) {
         return Math.abs(a - b) < (precision || 0.001);
+      }
+      // exports geometry to stl and triggers browser save
+      function exportSTL() {
+        var exporter = new THREE.STLExporter();
+        var stlString = exporter.parse( scene );
+        var blob = new Blob( [stlString], { type: 'text/plain' } );
+        saveAs(blob, 'geometry-' + [cube.scale.x, cube.scale.y, cube.scale.z].join('-') + '.stl');
       }
     </script>
   </body>
